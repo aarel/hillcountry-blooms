@@ -1,0 +1,64 @@
+<section class="collection-story" data-section-id="{{ section.id }}">
+  <div class="collection-story__inner">
+    {% assign story_content = collection.metafields.custom.story | default: collection.metafields.custom.story_richtext %}
+    {% assign story_heading = section.settings.heading %}
+
+    {% if story_content == blank %}
+      {% assign story_content = section.settings.default_story %}
+    {% endif %}
+
+    {% if story_heading != blank or story_content != blank %}
+      {% if story_heading != blank %}
+        <h2 class="collection-story__heading">{{ story_heading }}</h2>
+      {% endif %}
+      {% if story_content != blank %}
+        <div class="collection-story__content">
+          {{ story_content }}
+        </div>
+      {% endif %}
+    {% endif %}
+  </div>
+</section>
+
+<style>
+  .collection-story {
+    padding: 3.5rem 1.5rem 4rem;
+    background: #fff;
+  }
+
+  .collection-story__inner {
+    max-width: 900px;
+    margin: 0 auto;
+    text-align: center;
+  }
+
+  .collection-story__heading {
+    font-family: "Playfair Display", serif;
+    font-size: clamp(2rem, 3vw, 2.6rem);
+    margin-bottom: 1.5rem;
+  }
+
+  .collection-story__content {
+    color: #3c3c3c;
+  }
+</style>
+
+{% schema %}
+{
+  "name": "Collection story",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Story behind this collection"
+    },
+    {
+      "type": "textarea",
+      "id": "default_story",
+      "label": "Fallback story",
+      "default": "Discover bouquets inspired by Hill Country mornings and Lampasas evenings."
+    }
+  ]
+}
+{% endschema %}

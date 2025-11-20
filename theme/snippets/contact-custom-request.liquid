@@ -1,0 +1,26 @@
+{% comment %}
+  Custom arrangement request form leveraging Shopify contact form.
+  Adds hidden metafield keys for Flow automations.
+{% endcomment %}
+
+<form method="post" action="/contact#custom-arrangement" id="custom-arrangement">
+  <input type="hidden" name="form_type" value="contact" />
+  <input type="hidden" name="contact[tags]" value="contact-form,custom-arrangement" />
+
+  <label for="arrangement-name">Name</label>
+  <input id="arrangement-name" type="text" name="contact[name]" required>
+
+  <label for="arrangement-email">Email</label>
+  <input id="arrangement-email" type="email" name="contact[email]" required>
+
+  <label for="arrangement-details">Bouquet story or occasion</label>
+  <textarea id="arrangement-details" name="contact[body]" rows="4" required></textarea>
+
+  <label for="arrangement-date">Delivery date</label>
+  <input id="arrangement-date" type="date" name="contact[delivery_date]">
+
+  <label for="arrangement-zip">Delivery ZIP</label>
+  <input id="arrangement-zip" type="text" name="contact[delivery_zip]" pattern="[0-9]{5}">
+
+  <button type="submit">Request custom arrangement</button>
+</form>

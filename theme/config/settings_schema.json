@@ -1,0 +1,45 @@
+[
+  {
+    "name": "Theme settings",
+    "settings": [
+      {
+        "type": "header",
+        "content": "Brand colors"
+      },
+      {
+        "type": "color",
+        "id": "color_primary",
+        "label": "Primary color",
+        "default": "#A8B79A"
+      },
+      {
+        "type": "color",
+        "id": "color_accent",
+        "label": "Accent color",
+        "default": "#E8C565"
+      },
+      {
+        "type": "color",
+        "id": "color_background",
+        "label": "Background color",
+        "default": "#FAF7F3"
+      },
+      {
+        "type": "header",
+        "content": "Typography"
+      },
+      {
+        "type": "text",
+        "id": "font_heading",
+        "label": "Heading font",
+        "default": "Playfair Display"
+      },
+      {
+        "type": "text",
+        "id": "font_body",
+        "label": "Body font",
+        "default": "Lato"
+      }
+    ]
+  }
+]

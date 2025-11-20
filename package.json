@@ -1,0 +1,15 @@
+{
+  "name": "hill-country-blooms-theme",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "vite build --watch",
+    "build": "vite build",
+    "lint": "shopify theme check || true"
+  },
+  "devDependencies": {
+    "sass": "^1.70.0",
+    "vite": "^7.2.1"
+  }
+}

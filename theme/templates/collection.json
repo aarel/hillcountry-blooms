@@ -1,0 +1,26 @@
+{
+  "sections": {
+    "main": {
+      "type": "collection-main",
+      "settings": {
+        "show_collections_nav": true,
+        "collection_handles": "hill-country-bouquets\nsubscriptions\nevents-weddings\ngifts-addons",
+        "show_description": true,
+        "show_filters": true,
+        "show_sort": true,
+        "fallback_meta": "Local seasonal blooms inspired by Texas color and terrain."
+      }
+    },
+    "story": {
+      "type": "collection-story",
+      "settings": {
+        "heading": "Story behind this collection",
+        "default_story": "Discover bouquets inspired by Hill Country mornings and Lampasas evenings."
+      }
+    }
+  },
+  "order": [
+    "main",
+    "story"
+  ]
+}

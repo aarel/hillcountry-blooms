@@ -1,0 +1,21 @@
+body{
+    margin:0;
+    font-family:Lato,sans-serif;
+    background:#faf7f3;
+    color:#1f2d1f
+}
+
+a{
+    color:#c27c57
+}
+.button,button,input[type=submit]{
+    display:inline-block;
+    background:#e8c565;
+    color:#1f2d1f;
+    padding:.75rem 1.75rem;
+    border-radius:999px;
+    border:none;
+    font-weight:600;
+    cursor:pointer;
+    text-decoration:none}.button:hover,button:hover,input[type=submit]:hover{filter:brightness(.95)
+}

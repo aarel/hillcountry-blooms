@@ -1,0 +1,117 @@
+{% comment %}
+  Generic hero banner snippet for page and section reuse.
+  Accepts settings via `hero_settings` and blocks via `hero_blocks`.
+{% endcomment %}
+
+{% assign hero_settings = hero_settings | default: section.settings %}
+{% assign hero_blocks = hero_blocks | default: section.blocks %}
+
+<section class="hero-banner" data-component="hero-banner" data-section-id="{{ section.id | default: '' }}">
+  <div class="hero-banner__background"{% if hero_settings.background_image != blank %} style="background-image: url({{ hero_settings.background_image | image_url: width: 1920 }});"{% endif %}></div>
+  <div class="hero-banner__overlay"></div>
+  <div class="hero-banner__content">
+    {% if hero_settings.tagline != blank %}
+      <p class="hero-banner__tagline">{{ hero_settings.tagline }}</p>
+    {% endif %}
+
+    {% if hero_blocks.size > 0 %}
+      <ul class="hero-banner__messages" role="list">
+        {% for block in hero_blocks %}
+          <li class="hero-banner__message" {{ block.shopify_attributes }}>
+            {{ block.settings.message | default: block.settings.title }}
+          </li>
+        {% endfor %}
+      </ul>
+    {% endif %}
+
+    {% if hero_settings.cta_label != blank and hero_settings.cta_link != blank %}
+      <a class="hero-banner__cta button" href="{{ hero_settings.cta_link }}">
+        {{ hero_settings.cta_label }}
+      </a>
+    {% endif %}
+  </div>
+</section>
+
+<style>
+  .hero-banner {
+    position: relative;
+    display: grid;
+    min-height: 520px;
+    overflow: hidden;
+    background-color: #A8B79A;
+  }
+
+  .hero-banner__background {
+    position: absolute;
+    inset: 0;
+    background-size: cover;
+    background-position: center;
+    transform: scale(1.02);
+  }
+
+  .hero-banner__overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, rgba(168, 183, 154, 0.78), rgba(250, 247, 243, 0.35));
+  }
+
+  .hero-banner__content {
+    position: relative;
+    z-index: 2;
+    align-self: center;
+    justify-self: center;
+    max-width: 720px;
+    margin: 0 1.5rem;
+    text-align: center;
+    color: #1f2d1f;
+  }
+
+  .hero-banner__tagline {
+    font-size: clamp(2rem, 4vw, 3.25rem);
+    font-family: "Playfair Display", serif;
+    margin-bottom: 1.25rem;
+  }
+
+  .hero-banner__messages {
+    display: inline-flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    justify-content: center;
+    margin: 0 0 2rem;
+    padding: 0;
+    list-style: none;
+    font-weight: 600;
+  }
+
+  .hero-banner__message {
+    background: rgba(250, 247, 243, 0.85);
+    border-radius: 999px;
+    padding: 0.5rem 1rem;
+  }
+
+  .hero-banner__cta.button {
+    display: inline-block;
+    padding: 0.85rem 2.25rem;
+    border-radius: 999px;
+    background: #E8C565;
+    color: #1f2d1f;
+    text-decoration: none;
+    font-weight: 700;
+    transition: transform 150ms ease, box-shadow 150ms ease;
+  }
+
+  .hero-banner__cta.button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.12);
+  }
+
+  @media (max-width: 599px) {
+    .hero-banner {
+      min-height: 420px;
+    }
+
+    .hero-banner__messages {
+      gap: 0.5rem;
+    }
+  }
+</style>

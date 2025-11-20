@@ -1,0 +1,26 @@
+{
+  "sections": {
+    "main": {
+      "type": "collection-main",
+      "settings": {
+        "show_collections_nav": true,
+        "collection_handles": "hill-country-bouquets\nsubscriptions\nevents-weddings\ngifts-addons",
+        "show_description": true,
+        "show_filters": false,
+        "show_sort": false,
+        "fallback_meta": "Florals for weddings, ceremonies, and Texas celebrations."
+      }
+    },
+    "story": {
+      "type": "collection-story",
+      "settings": {
+        "heading": "Events & weddings",
+        "default_story": "Curated palettes for Hill Country I-dos, ranch parties, and family celebrations."
+      }
+    }
+  },
+  "order": [
+    "main",
+    "story"
+  ]
+}

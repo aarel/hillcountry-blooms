@@ -1,0 +1,217 @@
+{% comment %}
+  Card grid snippet for highlights, collections, and other callouts.
+  Expected parameters:
+    - grid_settings: object with `heading`/`subheading`
+    - grid_blocks: iterable of block objects
+    - grid_items: array of hashes (fallback)
+{% endcomment %}
+
+{% liquid
+  assign parent_section = parent_section | default: nil
+
+  if grid_settings == blank and parent_section != nil
+    assign grid_settings = parent_section.settings
+  endif
+
+  if grid_blocks == blank and parent_section != nil
+    assign grid_blocks = parent_section.blocks
+  endif
+
+  if grid_items == blank
+    assign grid_items = null
+  endif
+
+  assign grid_title = grid_title | default: ''
+  assign grid_subheading = grid_subheading | default: ''
+
+  if grid_title == '' and grid_settings != blank and grid_settings.heading
+    assign grid_title = grid_settings.heading
+  endif
+  if grid_subheading == '' and grid_settings != blank and grid_settings.subheading
+    assign grid_subheading = grid_settings.subheading
+  endif
+%}
+
+<section class="card-grid" data-component="card-grid">
+  <div class="card-grid__inner">
+    {% if grid_title != '' or grid_subheading != '' %}
+      <header class="card-grid__header">
+        {% if grid_title != '' %}
+          <h2 class="card-grid__heading">{{ grid_title }}</h2>
+        {% endif %}
+        {% if grid_subheading != '' %}
+          <p class="card-grid__subheading">{{ grid_subheading }}</p>
+        {% endif %}
+      </header>
+    {% endif %}
+
+    {% if grid_blocks and grid_blocks.size > 0 %}
+      <div class="card-grid__items">
+        {% for block in grid_blocks %}
+          {% liquid
+            assign block_collection = null
+            if block.settings.collection
+              assign block_collection = block.settings.collection
+            endif
+
+            assign block_image = block.settings.image
+            if block_collection and (block_image == blank)
+              assign block_image = block_collection.image
+            endif
+
+            assign block_icon = block.settings.icon
+            assign block_title = block.settings.title
+            if block_title == blank and block_collection
+              assign block_title = block_collection.title
+            endif
+
+            assign block_body = block.settings.body
+            if block_body == blank and block_collection and block_collection.description
+              assign block_body = block_collection.description | strip_html | truncate: 120
+            endif
+
+            assign block_link_url = block.settings.link_url
+            if block_link_url == blank and block_collection
+              assign block_link_url = block_collection.url
+            endif
+
+            assign block_link_label = block.settings.link_label
+            if block_link_label == blank and block_collection
+              assign block_link_label = 'Shop collection'
+            endif
+          %}
+
+          <article class="card-grid__item" {{ block.shopify_attributes }}>
+            {% if block_image %}
+              <div class="card-grid__image-wrapper">
+                <img class="card-grid__image" src="{{ block_image | image_url: width: 800 }}" alt="{{ block_title | escape }}">
+              </div>
+            {% elsif block_icon %}
+              <div class="card-grid__icon">{{ block_icon }}</div>
+            {% endif %}
+
+            {% if block_title %}
+              <h3 class="card-grid__title">{{ block_title }}</h3>
+            {% endif %}
+
+            {% if block_body %}
+              <p class="card-grid__body">{{ block_body }}</p>
+            {% endif %}
+
+            {% if block_link_url %}
+              <a class="card-grid__link" href="{{ block_link_url }}">{{ block_link_label | default: 'Learn more' }}</a>
+            {% endif %}
+          </article>
+        {% endfor %}
+      </div>
+    {% elsif grid_items %}
+      <div class="card-grid__items">
+        {% for item in grid_items %}
+          <article class="card-grid__item">
+            {% if item.image %}
+              <div class="card-grid__image-wrapper">
+                <img class="card-grid__image" src="{{ item.image | image_url: width: 800 }}" alt="{{ item.title | escape }}">
+              </div>
+            {% elsif item.icon %}
+              <div class="card-grid__icon">{{ item.icon }}</div>
+            {% endif %}
+
+            {% if item.title %}
+              <h3 class="card-grid__title">{{ item.title }}</h3>
+            {% endif %}
+
+            {% if item.body %}
+              <p class="card-grid__body">{{ item.body }}</p>
+            {% endif %}
+
+            {% if item.url %}
+              <a class="card-grid__link" href="{{ item.url }}">{{ item.label | default: 'Learn more' }}</a>
+            {% endif %}
+          </article>
+        {% endfor %}
+      </div>
+    {% endif %}
+  </div>
+</section>
+
+<style>
+  .card-grid {
+    padding: 3.5rem 1.5rem;
+    background-color: #FAF7F3;
+  }
+
+  .card-grid__inner {
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+
+  .card-grid__header {
+    text-align: center;
+    margin-bottom: 2.5rem;
+  }
+
+  .card-grid__heading {
+    font-family: "Playfair Display", serif;
+    font-size: clamp(2rem, 3vw, 2.8rem);
+    margin: 0;
+  }
+
+  .card-grid__subheading {
+    margin: 0.75rem auto 0;
+    max-width: 640px;
+    color: #3c3c3c;
+  }
+
+  .card-grid__items {
+    display: grid;
+    gap: 1.5rem;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  }
+
+  .card-grid__item {
+    border-radius: 18px;
+    padding: 1.75rem;
+    background: #fff;
+    box-shadow: 0 10px 18px rgba(0, 0, 0, 0.06);
+    text-align: left;
+    display: grid;
+    gap: 0.75rem;
+  }
+
+  .card-grid__image-wrapper {
+    border-radius: 14px;
+    overflow: hidden;
+  }
+
+  .card-grid__image {
+    width: 100%;
+    display: block;
+    object-fit: cover;
+  }
+
+  .card-grid__icon {
+    font-size: 2rem;
+  }
+
+  .card-grid__title {
+    font-family: "Playfair Display", serif;
+    font-size: 1.4rem;
+    margin: 0;
+  }
+
+  .card-grid__body {
+    margin: 0;
+    color: #3c3c3c;
+  }
+
+  .card-grid__link {
+    justify-self: start;
+    font-weight: 600;
+    color: #C27C57;
+    text-decoration: none;
+  }
+
+  .card-grid__link:hover {
+    text-decoration: underline;
+  }
+</style>

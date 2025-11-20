@@ -1,0 +1,85 @@
+{% comment %}
+  Minimal product card snippet for collection and featured product displays.
+{% endcomment %}
+
+{% assign product_item = product | default: nil %}
+{% if product_item == nil %}
+  {% assign product_item = card_product %}
+{% endif %}
+
+{% if product_item == nil %}
+  {% comment %}If no product is passed, nothing is rendered.{% endcomment %}
+  {% return %}
+{% endif %}
+
+<article class="product-card" data-product-id="{{ product_item.id }}">
+  <a class="product-card__link" href="{{ product_item.url }}">
+    <div class="product-card__media">
+      {% if product_item.featured_image %}
+        <img 
+          src="{{ product_item.featured_image | image_url: "blank" }}" 
+          alt="{{ product_item.featured_image.alt | default: product_item.title | escape }}"
+          width="{{ product_item.featured_image.width }}"
+          height="{{ product_item.featured_image.height }}"
+        />
+      {% else %}
+        <div class="product-card__placeholder">Hill Country Blooms</div>
+      {% endif %}
+    </div>
+    <div class="product-card__info">
+      <h3 class="product-card__title">{{ product_item.title }}</h3>
+      {% if product_item.metafields.custom.color_story %}
+        <p class="product-card__meta">{{ product_item.metafields.custom.color_story }}</p>
+      {% endif %}
+      <div class="product-card__price">{{ product_item.price | money }}</div>
+    </div>
+  </a>
+</article>
+
+<style>
+  .product-card {
+    background: #fff;
+    border-radius: 18px;
+    overflow: hidden;
+    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.08);
+  }
+
+  .product-card__link {
+    display: grid;
+    text-decoration: none;
+    color: inherit;
+  }
+
+  .product-card__media img {
+    width: 100%;
+    display: block;
+    object-fit: cover;
+  }
+
+  .product-card__placeholder {
+    display: grid;
+    place-items: center;
+    height: 240px;
+    background: #E8C565;
+    color: #1f2d1f;
+    font-weight: 700;
+  }
+
+  .product-card__info {
+    padding: 1.2rem 1.5rem 1.6rem;
+  }
+
+  .product-card__title {
+    font-size: 1.1rem;
+    margin: 0 0 0.4rem;
+  }
+
+  .product-card__meta {
+    margin: 0 0 0.6rem;
+    color: #6b6b6b;
+  }
+
+  .product-card__price {
+    font-weight: 700;
+  }
+</style>

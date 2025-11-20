@@ -1,0 +1,172 @@
+<section class="about-partners" data-section-id="{{ section.id }}">
+  <div class="about-partners__inner">
+    {% if section.settings.heading != blank or section.settings.subheading != blank %}
+      <header class="about-partners__header">
+        {% if section.settings.heading != blank %}
+          <h2 class="about-partners__heading">{{ section.settings.heading }}</h2>
+        {% endif %}
+        {% if section.settings.subheading != blank %}
+          <p class="about-partners__subheading">{{ section.settings.subheading }}</p>
+        {% endif %}
+      </header>
+    {% endif %}
+
+    <div class="about-partners__grid">
+      {% for block in section.blocks %}
+        <article class="about-partners__card" {{ block.shopify_attributes }}>
+          {% if block.settings.logo != blank %}
+            <div class="about-partners__logo">
+              <img 
+                alt="{{ block.settings.name | escape }}"
+                src="{{ block.settings.logo | image_url: "blank" }}"
+                width="{{ block.settings.logo | image.width }}"
+                height="{{ block.settings.logo | image.height | divided_by: block.settings.logo | image.width }}"  
+              />
+            </div>
+          {% endif %}
+          {% if block.settings.name != blank %}
+            <p class="about-partners__name">{{ block.settings.name }}</p>
+          {% endif %}
+          {% if block.settings.link_label != blank and block.settings.link_url != blank %}
+            <a class="about-partners__link" href="{{ block.settings.link_url }}">{{ block.settings.link_label }}</a>
+          {% endif %}
+        </article>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+<style>
+  .about-partners {
+    padding: 4rem 1.5rem;
+    background: #fff;
+  }
+
+  .about-partners__inner {
+    max-width: 1080px;
+    margin: 0 auto;
+  }
+
+  .about-partners__header {
+    text-align: center;
+    margin-bottom: 2.5rem;
+  }
+
+  .about-partners__heading {
+    font-family: "Playfair Display", serif;
+    font-size: clamp(2.2rem, 3vw, 2.8rem);
+    margin: 0 0 0.5rem;
+  }
+
+  .about-partners__subheading {
+    color: #3c3c3c;
+    margin: 0 auto;
+    max-width: 640px;
+  }
+
+  .about-partners__grid {
+    display: grid;
+    gap: 1.75rem;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    align-items: stretch;
+  }
+
+  .about-partners__card {
+    background: #FAF7F3;
+    border-radius: 18px;
+    padding: 1.5rem;
+    text-align: center;
+    display: grid;
+    gap: 0.75rem;
+    justify-items: center;
+  }
+
+  .about-partners__logo img {
+    max-width: 140px;
+    height: auto;
+    display: block;
+  }
+
+  .about-partners__name {
+    font-weight: 600;
+    margin: 0;
+  }
+
+  .about-partners__link {
+    color: #C27C57;
+    font-weight: 600;
+    text-decoration: none;
+  }
+
+  .about-partners__link:hover {
+    text-decoration: underline;
+  }
+</style>
+
+{% schema %}
+{
+  "name": "About partners",
+  "max_blocks": 8,
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Community partners"
+    },
+    {
+      "type": "textarea",
+      "id": "subheading",
+      "label": "Subheading",
+      "default": "We collaborate with local farmers, makers, and nonprofits throughout the Hill Country."
+    }
+  ],
+  "blocks": [
+    {
+      "type": "partner",
+      "name": "Partner",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "logo",
+          "label": "Logo"
+        },
+        {
+          "type": "text",
+          "id": "name",
+          "label": "Name",
+          "default": "Lampasas Growers Co-op"
+        },
+        {
+          "type": "text",
+          "id": "link_label",
+          "label": "Link label",
+          "default": "Visit site"
+        },
+        {
+          "type": "url",
+          "id": "link_url",
+          "label": "Link"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "About partners",
+      "category": "Custom",
+      "blocks": [
+        {
+          "type": "partner"
+        },
+        {
+          "type": "partner"
+        },
+        {
+          "type": "partner"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

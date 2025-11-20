@@ -1,0 +1,52 @@
+{% comment %}
+  Render a printable story card for a product using metafields.
+  Expected metafields:
+    - product.metafields.custom.story_title
+    - product.metafields.custom.story_excerpt
+    - product.metafields.custom.story_url (for QR linkage)
+{% endcomment %}
+
+{% assign story_title = product.metafields.custom.story_title | default: product.title %}
+{% assign story_excerpt = product.metafields.custom.story_excerpt %}
+{% assign story_url = product.metafields.custom.story_url %}
+
+<div class="product-story-card" data-product-id="{{ product.id }}">
+  <h3 class="product-story-card__title">{{ story_title }}</h3>
+  {% if story_excerpt %}
+    <p class="product-story-card__excerpt">{{ story_excerpt }}</p>
+  {% endif %}
+  {% if story_url %}
+    <div class="product-story-card__qr">
+      {% if product.metafields.custom.story_qr_svg %}
+        {{ product.metafields.custom.story_qr_svg }}
+      {% else %}
+        <a class="product-story-card__link" href="{{ story_url }}">Read the full story</a>
+      {% endif %}
+    </div>
+  {% endif %}
+</div>
+
+<style>
+  .product-story-card {
+    background: #FAF7F3;
+    border-radius: 18px;
+    padding: 1.5rem;
+    text-align: center;
+  }
+
+  .product-story-card__title {
+    margin: 0 0 0.75rem;
+    font-family: "Playfair Display", serif;
+  }
+
+  .product-story-card__excerpt {
+    margin: 0 0 1rem;
+    color: #3c3c3c;
+  }
+
+  .product-story-card__link {
+    color: #C27C57;
+    font-weight: 600;
+    text-decoration: none;
+  }
+</style>

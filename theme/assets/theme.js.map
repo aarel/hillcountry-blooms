@@ -1,0 +1,1 @@
+{"version":3,"file":"theme.js","sources":["../../frontend/main.js"],"sourcesContent":["import './main.scss';\n\ndocument.addEventListener('DOMContentLoaded', () => {\n  console.debug('Hill Country Blooms theme loaded');\n});\n"],"names":[],"mappings":"AAEA,SAAS,iBAAiB,mBAAoB,IAAM,CAClD,QAAQ,MAAM,kCAAkC,CAClD,CAAC"}

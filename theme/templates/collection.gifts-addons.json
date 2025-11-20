@@ -1,0 +1,26 @@
+{
+  "sections": {
+    "main": {
+      "type": "collection-main",
+      "settings": {
+        "show_collections_nav": true,
+        "collection_handles": "hill-country-bouquets\nsubscriptions\nevents-weddings\ngifts-addons",
+        "show_description": true,
+        "show_filters": false,
+        "show_sort": false,
+        "fallback_meta": "Cards, candles, dried flowers, and local gift kits."
+      }
+    },
+    "story": {
+      "type": "collection-story",
+      "settings": {
+        "heading": "Gifts & add-ons",
+        "default_story": "Pair every bouquet with Hill Country scents, cards, and keepsakes."
+      }
+    }
+  },
+  "order": [
+    "main",
+    "story"
+  ]
+}

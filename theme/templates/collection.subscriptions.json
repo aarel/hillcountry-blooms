@@ -1,0 +1,26 @@
+{
+  "sections": {
+    "main": {
+      "type": "collection-main",
+      "settings": {
+        "show_collections_nav": true,
+        "collection_handles": "hill-country-bouquets\nsubscriptions\nevents-weddings\ngifts-addons",
+        "show_description": true,
+        "show_filters": false,
+        "show_sort": false,
+        "fallback_meta": "Monthly Hill Country Bouquets — fresh florals on repeat."
+      }
+    },
+    "story": {
+      "type": "collection-story",
+      "settings": {
+        "heading": "Monthly subscriptions",
+        "default_story": "Set-it-and-enjoy bouquets delivered with new seasonal palettes each month."
+      }
+    }
+  },
+  "order": [
+    "main",
+    "story"
+  ]
+}

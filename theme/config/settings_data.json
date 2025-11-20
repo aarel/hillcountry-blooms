@@ -1,0 +1,16 @@
+{
+  "current": "development",
+  "presets": {
+    "development": {
+      "theme_settings": {
+        "color_primary": "#A8B79A",
+        "color_accent": "#E8C565",
+        "color_background": "#FAF7F3",
+        "font_heading": "Playfair Display",
+        "font_body": "Lato"
+      },
+      "blocks": {},
+      "order": []
+    }
+  }
+}

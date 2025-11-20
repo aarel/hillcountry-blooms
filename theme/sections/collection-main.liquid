@@ -1,0 +1,223 @@
+<div class="collection-main" data-section-id="{{ section.id }}">
+  <header class="collection-main__header">
+    <h1 class="collection-main__title">{{ collection.title }}</h1>
+    {% if section.settings.show_description %}
+      <div class="collection-main__description">
+        {% if collection.description != blank %}
+          {{ collection.description }}
+        {% else %}
+          <p>{{ section.settings.fallback_meta }}</p>
+        {% endif %}
+      </div>
+    {% endif %}
+
+    {% if collection.metafields.custom.story_snippet %}
+      <div class="collection-main__meta">{{ collection.metafields.custom.story_snippet }}</div>
+    {% endif %}
+  </header>
+
+{% assign nav_handles = section.settings.collection_handles | default: '' %}
+{% assign nav_handles = nav_handles | newline_to_br | split: '<br />' %}
+
+{% if section.settings.show_collections_nav and nav_handles != blank %}
+    <nav class="collection-main__nav" aria-label="Collections navigation">
+      <ul class="collection-main__nav-list">
+        {% for handle in nav_handles %}
+          {% assign clean_handle = handle | strip %}
+          {% if clean_handle == '' %}
+            {% continue %}
+          {% endif %}
+          {% assign nav_collection = collections[clean_handle] %}
+          {% if nav_collection %}
+            <li class="collection-main__nav-item">
+              <a href="{{ nav_collection.url }}" {% if nav_collection.id == collection.id %}aria-current="page"{% endif %}>
+                {{ nav_collection.title }}
+              </a>
+            </li>
+          {% endif %}
+        {% endfor %}
+      </ul>
+    </nav>
+  {% endif %}
+
+  {% if section.settings.show_filters or section.settings.show_sort %}
+    <div class="collection-main__toolbar">
+      {% if section.settings.show_filters %}
+        {% render 'faceted-filters' %}
+      {% endif %}
+      {% if section.settings.show_sort %}
+        {% render 'collection-sort' %}
+      {% endif %}
+    </div>
+  {% endif %}
+
+  {% paginate collection.products by 12 %}
+    {% if collection.products_count > 0 %}
+      <div class="collection-main__tags">
+        {% for tag in collection.all_tags %}
+          <a href="{{ collection.url | append: '/' | append: tag | handleize }}" class="collection-main__tag">{{ tag }}</a>
+        {% endfor %}
+      </div>
+    {% endif %}
+
+    {% if collection.products_count > 0 %}
+      <div class="collection-main__grid">
+        {% for product in collection.products %}
+          {% render 'product-card', product: product %}
+        {% endfor %}
+      </div>
+    {% else %}
+      <p class="collection-main__empty">No products found — try adjusting filters or browse other Hill Country collections.</p>
+    {% endif %}
+
+    {% render 'pagination', paginate: paginate %}
+  {% endpaginate %}
+</div>
+
+<style>
+  .collection-main {
+    padding: 3.5rem 1.5rem;
+    background: #FAF7F3;
+  }
+
+  .collection-main__header {
+    max-width: 960px;
+    margin: 0 auto 2.5rem;
+    text-align: center;
+  }
+
+  .collection-main__title {
+    font-family: "Playfair Display", serif;
+    font-size: clamp(2.4rem, 3vw, 3.2rem);
+    margin: 0;
+  }
+
+  .collection-main__description {
+    margin-top: 1.1rem;
+    color: #3c3c3c;
+  }
+
+  .collection-main__meta {
+    margin-top: 0.75rem;
+    font-weight: 600;
+    color: #C27C57;
+  }
+
+  .collection-main__toolbar {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 1rem;
+    max-width: 960px;
+    margin: 0 auto 2rem;
+  }
+
+  .collection-main__grid {
+    max-width: 1100px;
+    margin: 0 auto;
+    display: grid;
+    gap: 1.75rem;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  }
+
+  .collection-main__empty {
+    text-align: center;
+    color: #7a7a7a;
+  }
+
+  .collection-main__tags {
+    max-width: 960px;
+    margin: 0 auto 2rem;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.6rem;
+    justify-content: center;
+  }
+
+  .collection-main__tag {
+    padding: 0.45rem 1rem;
+    border-radius: 999px;
+    background: #fff;
+    text-decoration: none;
+    color: #1f2d1f;
+    box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.08);
+  }
+
+  .collection-main__tag:hover {
+    background: #E8C565;
+  }
+
+  .collection-main__nav {
+    margin: 0 auto 2rem;
+    max-width: 960px;
+    text-align: center;
+  }
+
+  .collection-main__nav-list {
+    display: inline-flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  .collection-main__nav-item a {
+    text-decoration: none;
+    padding: 0.55rem 1.2rem;
+    border-radius: 999px;
+    background: #fff;
+    box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.12);
+    color: #1f2d1f;
+  }
+
+  .collection-main__nav-item a[aria-current="page"] {
+    background: #CBA7A0;
+    color: #fff;
+    box-shadow: none;
+  }
+</style>
+
+{% schema %}
+{
+  "name": "Collection main",
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "show_collections_nav",
+      "label": "Show collections navigation",
+      "default": false
+    },
+    {
+      "type": "textarea",
+      "id": "collection_handles",
+      "label": "Collections to feature (handles separated by newline)",
+      "info": "Enter collection handles (one per line) to surface in the navigation pill bar."
+    },
+    {
+      "type": "checkbox",
+      "id": "show_description",
+      "label": "Show description",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_filters",
+      "label": "Show faceted filters",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_sort",
+      "label": "Show sort dropdown",
+      "default": true
+    },
+    {
+      "type": "textarea",
+      "id": "fallback_meta",
+      "label": "Fallback description",
+      "default": "Local seasonal blooms inspired by Texas color and terrain."
+    }
+  ]
+}
+{% endschema %}

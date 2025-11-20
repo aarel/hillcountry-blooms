@@ -1,0 +1,14 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>{{ page_title }}{% if current_page != 1 %} – Page {{ current_page }}{% endif %}</title>
+    {{ content_for_header }}
+    {{ 'theme.css' | asset_url | stylesheet_tag }}
+    <script src="{{ 'theme.js' | asset_url }}" defer></script>
+  </head>
+  <body class="template-{{ template | handle }}">
+    {{ content_for_layout }}
+  </body>
+</html>

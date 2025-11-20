@@ -1,0 +1,12 @@
+{% comment %}
+  Basic collection sort dropdown placeholder.
+{% endcomment %}
+<form class="collection-sort" method="get">
+  <label for="collection-sort-select" class="collection-sort__label">Sort by</label>
+  <select id="collection-sort-select" name="sort_by" class="collection-sort__select" onchange="this.form.submit()">
+    <option value="best-selling" {% if collection.sort_by == 'best-selling' %}selected{% endif %}>Best selling</option>
+    <option value="created-descending" {% if collection.sort_by == 'created-descending' %}selected{% endif %}>Newest</option>
+    <option value="price-ascending" {% if collection.sort_by == 'price-ascending' %}selected{% endif %}>Price: Low to high</option>
+    <option value="price-descending" {% if collection.sort_by == 'price-descending' %}selected{% endif %}>Price: High to low</option>
+  </select>
+</form>

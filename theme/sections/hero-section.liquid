@@ -1,0 +1,72 @@
+{% render 'hero-banner', hero_settings: section.settings, hero_blocks: section.blocks %}
+
+{% schema %}
+{
+  "name": "Home hero",
+  "max_blocks": 3,
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "background_image",
+      "label": "Background image"
+    },
+    {
+      "type": "text",
+      "id": "tagline",
+      "label": "Tagline",
+      "default": "Local roots. Fresh blooms. Designed for Central Texas life."
+    },
+    {
+      "type": "text",
+      "id": "cta_label",
+      "label": "CTA label",
+      "default": "Shop Now"
+    },
+    {
+      "type": "url",
+      "id": "cta_link",
+      "label": "CTA link"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "message",
+      "name": "Banner message",
+      "settings": [
+        {
+          "type": "text",
+          "id": "message",
+          "label": "Message",
+          "default": "🌻 Monthly Subscriptions"
+        }
+      ]
+    }
+  ],
+  "default": {
+    "blocks": [
+      {
+        "type": "message",
+        "settings": {
+          "message": "🌻 Monthly Subscriptions"
+        }
+      },
+      {
+        "type": "message",
+        "settings": {
+          "message": "💐 Wedding Florals"
+        }
+      },
+      {
+        "type": "message",
+        "settings": {
+          "message": "🚚 Local Delivery"
+        }
+      }
+    ],
+    "settings": {
+      "tagline": "Local roots. Fresh blooms. Designed for Central Texas life.",
+      "cta_label": "Shop Now"
+    }
+  }
+}
+{% endschema %}

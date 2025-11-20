@@ -1,0 +1,69 @@
+{
+  "sections": {
+    "story": {
+      "type": "about-story",
+      "settings": {
+        "intro_heading": "Why We Bloom",
+        "intro_body": "<p>Hill Country Blooms exists to celebrate the growers, families, and stories rooted in Central Texas soil.</p>"
+      },
+      "blocks": {
+        "roots": {
+          "type": "richtext",
+          "settings": {
+            "heading": "Our roots",
+            "body": "<p>Our flowers are grown by Hill Country farmers who know the land and its changing seasons.</p>"
+          }
+        },
+        "founder": {
+          "type": "richtext",
+          "settings": {
+            "heading": "Meet the founder",
+            "body": "<p>A local writer and designer turned florist, crafting bouquets that read like love letters to Central Texas.</p>"
+          }
+        },
+        "promise": {
+          "type": "richtext",
+          "settings": {
+            "heading": "Community promise",
+            "body": "<p>Each order supports Lampasas farmers, veterans’ programs, and the Hill Country arts scene.</p>"
+          }
+        }
+      }
+    },
+    "partners": {
+      "type": "about-partners",
+      "blocks": {
+        "partner-1": {
+          "type": "partner",
+          "settings": {
+            "name": "Lampasas Growers Co-op"
+          }
+        },
+        "partner-2": {
+          "type": "partner",
+          "settings": {
+            "name": "Burnet Wildflower Farm"
+          }
+        },
+        "partner-3": {
+          "type": "partner",
+          "settings": {
+            "name": "Central Texas Hives"
+          }
+        }
+      }
+    },
+    "photo": {
+      "type": "about-photo",
+      "settings": {
+        "alt_text": "Hill Country Blooms founder arranging bouquets",
+        "caption": "Hand-prepared in Lampasas — delivered across the Hill Country."
+      }
+    }
+  },
+  "order": [
+    "story",
+    "partners",
+    "photo"
+  ]
+}

@@ -1,0 +1,84 @@
+<section class="about-photo" data-section-id="{{ section.id }}">
+  {% if section.settings.image != blank %}
+    <figure class="about-photo__figure">
+      <img 
+        class="about-photo__image" 
+        src="{{ section.settings.image | image_url: "blank" }}" 
+        alt="{{ section.settings.alt_text | escape }}"
+        width="{{ image.width }}"
+        height="{{ image.height }}"
+      />
+
+              <img 
+                alt="{{ block.settings.name | escape }}"
+                src="{{ block.settings.logo | image_url: "blank" }}"
+                width="{{ block.settings.logo | image.width }}"
+                height="{{ block.settings.logo | image.height | divided_by: block.settings.logo | image.width }}"  
+              />
+
+      {% if section.settings.caption != blank %}
+        <figcaption class="about-photo__caption">{{ section.settings.caption }}</figcaption>
+      {% endif %}
+    </figure>
+  {% endif %}
+</section>
+
+<style>
+  .about-photo {
+    margin: 0;
+    background: #000;
+  }
+
+  .about-photo__figure {
+    position: relative;
+    margin: 0;
+  }
+
+  .about-photo__image {
+    width: 100%;
+    display: block;
+    object-fit: cover;
+  }
+
+  .about-photo__caption {
+    position: absolute;
+    bottom: 1.5rem;
+    left: 1.5rem;
+    padding: 0.6rem 1rem;
+    border-radius: 999px;
+    background: rgba(0, 0, 0, 0.55);
+    color: #fff;
+    font-size: 0.95rem;
+  }
+</style>
+
+{% schema %}
+{
+  "name": "About featured photo",
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Image"
+    },
+    {
+      "type": "text",
+      "id": "alt_text",
+      "label": "Alt text",
+      "default": "Founder with Hill Country bouquet"
+    },
+    {
+      "type": "text",
+      "id": "caption",
+      "label": "Caption",
+      "default": "Hand-tied in Lampasas, delivered with love."
+    }
+  ],
+  "presets": [
+    {
+      "name": "About photo",
+      "category": "Custom"
+    }
+  ]
+}
+{% endschema %}

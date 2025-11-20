@@ -1,0 +1,21 @@
+{
+  "sections": {
+    "hero": {
+      "type": "blog-hero",
+      "settings": {
+        "subheading": "Stories, farmer spotlights, and bouquet care tips from the Hill Country Journal."
+      }
+    },
+    "articles": {
+      "type": "blog-articles",
+      "settings": {
+        "articles_per_page": 6,
+        "shop_link_url": "/collections/hill-country-bouquets"
+      }
+    }
+  },
+  "order": [
+    "hero",
+    "articles"
+  ]
+}

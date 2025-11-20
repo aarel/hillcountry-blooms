@@ -1,0 +1,82 @@
+<section class="home-quick-highlights" data-section-id="{{ section.id }}">
+  {% render 'card-grid', parent_section: section, grid_settings: section.settings, grid_blocks: section.blocks %}
+</section>
+
+{% schema %}
+{
+  "name": "Home quick highlights",
+  "max_blocks": 3,
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Why neighbors choose Hill Country Blooms"
+    },
+    {
+      "type": "text",
+      "id": "subheading",
+      "label": "Subheading",
+      "default": "Fast delivery, locally grown stems, and a story behind every bouquet."
+    }
+  ],
+  "blocks": [
+    {
+      "type": "highlight",
+      "name": "Highlight",
+      "settings": [
+        {
+          "type": "text",
+          "id": "icon",
+          "label": "Icon",
+          "default": "🌾"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title",
+          "default": "Locally Grown"
+        },
+        {
+          "type": "textarea",
+          "id": "body",
+          "label": "Description",
+          "default": "Central Texas farmers supply seasonal stems picked at their peak."
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Quick highlights",
+      "category": "Custom",
+      "blocks": [
+        {
+          "type": "highlight",
+          "settings": {
+            "icon": "🌾",
+            "title": "Locally Grown",
+            "body": "Central Texas farmers supply seasonal stems picked at their peak."
+          }
+        },
+        {
+          "type": "highlight",
+          "settings": {
+            "icon": "🕰",
+            "title": "Fresh & Fast",
+            "body": "Morning harvests go from field to doorstep in under 24 hours."
+          }
+        },
+        {
+          "type": "highlight",
+          "settings": {
+            "icon": "💌",
+            "title": "Story in Every Stem",
+            "body": "Each bouquet ships with the Hill Country story that inspired it."
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

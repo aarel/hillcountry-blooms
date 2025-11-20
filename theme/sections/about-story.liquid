@@ -1,0 +1,152 @@
+<section class="about-story" data-section-id="{{ section.id }}">
+  <div class="about-story__inner">
+    {% if section.settings.intro_heading != blank or section.settings.intro_body != blank %}
+      <div class="about-story__intro">
+        {% if section.settings.intro_heading != blank %}
+          <h1 class="about-story__title">{{ section.settings.intro_heading }}</h1>
+        {% endif %}
+        {% if section.settings.intro_body != blank %}
+          <div class="about-story__lead">{{ section.settings.intro_body }}</div>
+        {% endif %}
+      </div>
+    {% endif %}
+
+    <div class="about-story__grid">
+      {% for block in section.blocks %}
+        <article class="about-story__card" {{ block.shopify_attributes }}>
+          {% if block.settings.heading != blank %}
+            <h2 class="about-story__card-title">{{ block.settings.heading }}</h2>
+          {% endif %}
+          {% if block.settings.body != blank %}
+            <div class="about-story__card-body">{{ block.settings.body }}</div>
+          {% endif %}
+        </article>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+<style>
+  .about-story {
+    padding: 4rem 1.5rem 3.5rem;
+    background: #FAF7F3;
+  }
+
+  .about-story__inner {
+    max-width: 1080px;
+    margin: 0 auto;
+    display: grid;
+    gap: 3rem;
+  }
+
+  .about-story__intro {
+    text-align: center;
+    max-width: 720px;
+    margin: 0 auto;
+    display: grid;
+    gap: 0.9rem;
+  }
+
+  .about-story__title {
+    font-family: "Playfair Display", serif;
+    font-size: clamp(2.4rem, 4vw, 3.4rem);
+    margin: 0;
+  }
+
+  .about-story__lead {
+    color: #3c3c3c;
+  }
+
+  .about-story__grid {
+    display: grid;
+    gap: 2rem;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  }
+
+  .about-story__card {
+    padding: 2rem;
+    background: #fff;
+    border-radius: 22px;
+    box-shadow: 0 20px 30px rgba(0, 0, 0, 0.08);
+  }
+
+  .about-story__card-title {
+    font-family: "Playfair Display", serif;
+    font-size: 1.8rem;
+    margin: 0 0 0.75rem;
+  }
+
+  .about-story__card-body {
+    color: #3c3c3c;
+  }
+</style>
+
+{% schema %}
+{
+  "name": "About story blocks",
+  "max_blocks": 4,
+  "settings": [
+    {
+      "type": "text",
+      "id": "intro_heading",
+      "label": "Intro heading",
+      "default": "Why we bloom"
+    },
+    {
+      "type": "richtext",
+      "id": "intro_body",
+      "label": "Intro body",
+      "default": "<p>Hill Country Blooms exists to celebrate the growers, families, and stories rooted in Central Texas soil.</p>"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "richtext",
+      "name": "Story block",
+      "settings": [
+        {
+          "type": "text",
+          "id": "heading",
+          "label": "Heading",
+          "default": "Our roots"
+        },
+        {
+          "type": "richtext",
+          "id": "body",
+          "label": "Body",
+          "default": "<p>We partner with Lampasas, Burnet, and Fredericksburg farmers who understand Hill Country weather and soil.</p>"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "About story blocks",
+      "category": "Custom",
+      "blocks": [
+        {
+          "type": "richtext",
+          "settings": {
+            "heading": "Our roots",
+            "body": "<p>We partner with Lampasas, Burnet, and Fredericksburg farmers who understand Hill Country weather and soil.</p>"
+          }
+        },
+        {
+          "type": "richtext",
+          "settings": {
+            "heading": "Founder story",
+            "body": "<p>Our founder is a writer-turned-florist who believes every bouquet should carry a piece of Central Texas home.</p>"
+          }
+        },
+        {
+          "type": "richtext",
+          "settings": {
+            "heading": "Community promise",
+            "body": "<p>Every delivery supports local growers, veterans’ programs, and Lampasas nonprofits.</p>"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

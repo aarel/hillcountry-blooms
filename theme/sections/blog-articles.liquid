@@ -1,0 +1,232 @@
+<section class="blog-articles" data-section-id="{{ section.id }}">
+  <div class="blog-articles__inner">
+    {% paginate blog.articles by section.settings.articles_per_page %}
+      {% if blog.articles_count > 0 %}
+        <div class="blog-articles__grid">
+          {% for article in paginate.items %}
+            <article class="blog-articles__item">
+              {% if article.image %}
+                <a class="blog-articles__image-link" href="{{ article.url }}">
+                  <img 
+                    class="blog-articles__image" 
+                    src="{{ article.image | image_url: "blank" }}" 
+                    alt="{{ article.image.alt | default: article.title | escape }}"
+                    width="{{ article.image.width }}"
+                    height="{{ article.image.height }}"
+                  />
+                </a>
+              {% endif %}
+
+              <div class="blog-articles__content">
+                <header class="blog-articles__header">
+                  <p class="blog-articles__meta">{{ article.published_at | date: "%B %d, %Y" }}</p>
+                  <h2 class="blog-articles__title"><a href="{{ article.url }}">{{ article.title }}</a></h2>
+                </header>
+
+                <div class="blog-articles__excerpt">
+                  {{ article.excerpt_or_content | strip_html | truncate: 220 }}
+                </div>
+
+                {% if section.settings.show_author %}
+                  <div class="blog-articles__author">{{ section.settings.author_label }}</div>
+                {% endif %}
+
+                <div class="blog-articles__actions">
+                  <a class="blog-articles__read" href="{{ article.url }}">Read story</a>
+                  {% if section.settings.shop_link_url != blank %}
+                    <a class="blog-articles__shop" href="{{ section.settings.shop_link_url }}">{{ section.settings.shop_link_label }}</a>
+                  {% endif %}
+                </div>
+
+                {% if section.settings.show_share %}
+                  <div class="blog-articles__share" aria-label="Share">
+                    <span>Share:</span>
+                    <a href="https://www.facebook.com/sharer/sharer.php?u={{ article.url | url_encode }}" target="_blank" rel="noopener">Facebook</a>
+                    <a href="https://www.pinterest.com/pin/create/button/?url={{ article.url | url_encode }}" target="_blank" rel="noopener">Pinterest</a>
+                  </div>
+                {% endif %}
+              </div>
+            </article>
+          {% endfor %}
+        </div>
+      {% else %}
+        <p class="blog-articles__empty">No posts yet — check back soon for stories from the Hill Country Journal.</p>
+      {% endif %}
+
+      {% render 'pagination', paginate: paginate %}
+    {% endpaginate %}
+  </div>
+</section>
+
+<style>
+  .blog-articles {
+    padding: 4rem 1.5rem 4.5rem;
+    background: #FAF7F3;
+  }
+
+  .blog-articles__inner {
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+
+  .blog-articles__grid {
+    display: grid;
+    gap: 2.5rem;
+  }
+
+  .blog-articles__item {
+    background: #fff;
+    border-radius: 22px;
+    overflow: hidden;
+    box-shadow: 0 24px 36px rgba(0, 0, 0, 0.08);
+  }
+
+  .blog-articles__image-link {
+    display: block;
+  }
+
+  .blog-articles__image {
+    width: 100%;
+    display: block;
+    object-fit: cover;
+  }
+
+  .blog-articles__content {
+    padding: 2rem;
+    display: grid;
+    gap: 1.25rem;
+  }
+
+  .blog-articles__header {
+    display: grid;
+    gap: 0.5rem;
+  }
+
+  .blog-articles__meta {
+    margin: 0;
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    letter-spacing: 0.16em;
+    color: #7a7a7a;
+  }
+
+  .blog-articles__title {
+    margin: 0;
+    font-family: "Playfair Display", serif;
+    font-size: clamp(1.9rem, 3vw, 2.3rem);
+  }
+
+  .blog-articles__title a {
+    color: inherit;
+    text-decoration: none;
+  }
+
+  .blog-articles__title a:hover {
+    text-decoration: underline;
+  }
+
+  .blog-articles__excerpt {
+    color: #3c3c3c;
+  }
+
+  .blog-articles__author {
+    font-weight: 600;
+    color: #C27C57;
+  }
+
+  .blog-articles__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+
+  .blog-articles__read,
+  .blog-articles__shop {
+    display: inline-block;
+    text-decoration: none;
+    font-weight: 600;
+    color: #1f2d1f;
+    padding: 0.7rem 1.6rem;
+    border-radius: 999px;
+    background: #E8C565;
+  }
+
+  .blog-articles__shop {
+    background: #CBA7A0;
+    color: #fff;
+  }
+
+  .blog-articles__share {
+    display: flex;
+    gap: 0.75rem;
+    align-items: center;
+    font-size: 0.95rem;
+  }
+
+  .blog-articles__share a {
+    color: #C27C57;
+    text-decoration: none;
+  }
+
+  .blog-articles__share a:hover {
+    text-decoration: underline;
+  }
+
+  .blog-articles__empty {
+    text-align: center;
+    color: #7a7a7a;
+  }
+</style>
+
+{% schema %}
+{
+  "name": "Blog article list",
+  "settings": [
+    {
+      "type": "range",
+      "id": "articles_per_page",
+      "label": "Articles per page",
+      "min": 3,
+      "max": 12,
+      "step": 1,
+      "default": 6
+    },
+    {
+      "type": "checkbox",
+      "id": "show_author",
+      "label": "Show author attribution",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "author_label",
+      "label": "Author label",
+      "default": "Written by Hill Country Blooms Founder"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_share",
+      "label": "Show share buttons",
+      "default": true
+    },
+    {
+      "type": "url",
+      "id": "shop_link_url",
+      "label": "Shop this look URL",
+      "default": "/collections"
+    },
+    {
+      "type": "text",
+      "id": "shop_link_label",
+      "label": "Shop this look label",
+      "default": "Shop this look"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Blog article list",
+      "category": "Blog"
+    }
+  ]
+}
+{% endschema %}
